@@ -19,3 +19,5 @@
 Además, el sitio es completamente **responsivo**, con puntos de ruptura en `320px`, `768px`, y `1280px`, siguiendo las guías de diseño proporcionadas en Figma.
 
 ## Enlace a GitHub Pages
+
+https://gaboobga.github.io/web_project_around/
