@@ -1,0 +1,38 @@
+/* Reset general y ajustes globales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+/*Contenedor principal*/
+.page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: max(16px, calc((100vw - 880px) / 2));
+  padding-right: max(16px, calc((100vw - 880px) / 2));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Ajuste escritorio fijo*/
+@media screen and (min-width: 1280px) {
+  .page {
+    padding: 0 200px;
+  }
+}

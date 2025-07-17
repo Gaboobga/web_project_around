@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alrededor de los EE.UU.</title>
+    <link rel="stylesheet" href="pages/style.css" />
+    <link rel="stylesheet" href="./fonts/Inter.ttc" />
+  </head>
+  <body class="page">
+    <header class="header">
+      <h1 class="header__title">
+        Around<span class="header__subtitle">The U.S.</span>
+      </h1>
+    </header>
+
+    <div class="profile">
+      <img src="./images/Avatar.png" alt="Avatar" class="profile__avatar" />
+      <div class="profile__info">
+        <h1 class="profile__name">
+          Jacques Cousteau
+          <button
+            class="profile__edit-button"
+            type="button"
+            aria-label="Editar perfil"
+          ></button>
+        </h1>
+        <p class="profile__occupation">Explorador</p>
+      </div>
+      <button
+        class="profile__add-button"
+        type="button"
+        aria-label="Agregar"
+      ></button>
+    </div>
+
+    <section class="cards">
+      <article class="card">
+        <img
+          src="images/img_1.jpg"
+          alt="Valle de Yosemite"
+          class="card__image"
+        />
+        <div class="card__caption">
+          <h3 class="card__title block">Valle de Yosemite</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/img_2.png" alt="Lago Louise" class="card__image" />
+        <div class="card__caption">
+          <h3 class="card__title block">Lago Louise</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/img_3.png" alt="Montañas Calvas" class="card__image" />
+        <div class="card__caption">
+          <h3 class="card__title block">Montañas Calvas</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img
+          src="images/img_4.png"
+          alt="Parque Nacional de la Vanoise"
+          class="card__image"
+        />
+        <div class="card__caption">
+          <h3 class="card__title block">Vanoise National Park</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/img_5.png" alt="Latemar" class="card__image" />
+        <div class="card__caption">
+          <h3 class="card__title block">Latemar</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="images/img_6.png" alt="Lago di Braies" class="card__image" />
+        <div class="card__caption">
+          <h3 class="card__title block">Lago di Braies</h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Me gusta"
+          ></button>
+        </div>
+      </article>
+    </section>
+
+    <section class="popup">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Cerrar"
+        ></button>
+        <h3 class="popup__title">Editar perfil</h3>
+        <form class="popup__form" name="edit-profile" novalidate>
+          <input
+            type="text"
+            name="name"
+            class="popup__input"
+            placeholder="Nombre"
+            required
+            minlength="2"
+            maxlength="40"
+          />
+          <input
+            type="text"
+            name="about"
+            class="popup__input"
+            placeholder="Acerca de mí"
+            required
+            minlength="2"
+            maxlength="200"
+          />
+          <button class="popup__save-button" type="submit" disabled>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer__text">&copy; 2024 Around The U.S.</p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>

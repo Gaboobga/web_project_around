@@ -1,0 +1,14 @@
+/*Footer*/
+.footer {
+  width: 100%;
+  padding-top: 80px; /* Espacio entre tarjetas y footer */
+  padding-bottom: 30px;
+}
+
+.footer__text {
+  font-size: 18px;
+  font-weight: 400;
+  color: #545454;
+  text-align: left;
+  width: 100%;
+}
