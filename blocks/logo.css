@@ -10,7 +10,7 @@
   font-weight: 300;
   line-height: 48px;
   letter-spacing: -1px;
-  margin: 0; /*necesario porque normalize elimina los márgenes predeterminados*/
+  margin: 0;
   padding: 0;
 }
 

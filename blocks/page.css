@@ -5,11 +5,16 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  overflow-x: hidden; /* evitar scroll horizontal */
+}
+
 body {
   background-color: #000;
   color: #fff;
   font-family: "Inter", sans-serif;
-  overflow-x: hidden;
 }
 
 /*Contenedor principal*/

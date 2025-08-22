@@ -15,7 +15,7 @@
   }
 }
 
-/* Tablet*/
+/* Tablet */
 @media screen and (max-width: 768px) {
   .page {
     padding: 0 19px;
@@ -37,31 +37,40 @@
     gap: 16px;
   }
 
-  .popup__container {
+  /* Popup de formularios (editar / nuevo lugar) */
+  .popup:not(.popup_type_image) .popup__container {
     width: 282px;
     padding: 25px 22px;
   }
 
-  .popup__title {
+  .popup:not(.popup_type_image) .popup__title {
     font-size: 18px;
     margin-bottom: 28px;
   }
 
-  .popup__input {
+  .popup:not(.popup_type_image) .popup__input {
     font-size: 12px;
   }
 
-  .popup__save-button {
+  .popup:not(.popup_type_image) .popup__save-button {
     font-size: 14px;
   }
 
-  .popup__close-button {
-    top: -36px;
-    right: 0;
+  /* Popup de imagen */
+  .popup_type_image .popup__container,
+  .popup_type_image .popup__figure,
+  .popup_type_image .popup__image {
+    max-width: 90vw;
+    max-height: 75vh;
+  }
+
+  .popup_type_image .popup__close-button {
+    top: 10px;
+    right: 10px;
   }
 }
 
-/*Móvil*/
+/* Móvil */
 @media screen and (max-width: 544px) {
   .profile {
     flex-direction: column;
@@ -76,10 +85,9 @@
     margin: 0 auto 24px;
     display: block;
     width: 120px;
-    height: 120x;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 24px;
   }
 
   .profile__info {
@@ -128,15 +136,33 @@
     cursor: pointer;
   }
 
-  .popup__title {
-    margin-bottom: 70px; /* espacio entre título y primer input */
+  /* Popup de formularios (editar / nuevo lugar) */
+  .popup:not(.popup_type_image) .popup__title {
+    margin-bottom: 70px;
   }
 
-  .popup__input:first-of-type {
-    margin-bottom: 10px; /* espacio entre nombre y "acerca de mí" */
+  .popup:not(.popup_type_image) .popup__input:first-of-type {
+    margin-bottom: 10px;
   }
 
-  .popup__input {
+  .popup:not(.popup_type_image) .popup__input {
     width: 100%;
+  }
+
+  /* Popup de imagen  */
+  .popup_type_image .popup__container,
+  .popup_type_image .popup__figure,
+  .popup_type_image .popup__image {
+    max-width: 92vw;
+    max-height: 75vh;
+  }
+
+  .popup__caption {
+    font-size: 12px;
+  }
+
+  .popup_type_image .popup__close-button {
+    top: 8px;
+    right: 8px;
   }
 }

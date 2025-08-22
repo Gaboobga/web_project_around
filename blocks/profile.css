@@ -22,10 +22,7 @@
   font-size: 42px;
   font-weight: 500;
   line-height: 48px;
-  margin-bottom: 8px;
-  margin-top: 0; /* Elimina cualquier margen que normalize quite o altere */
-  margin-bottom: 1; /* Controlar la separación con "about" */
-  line-height: 1.2;
+  margin: 0 0 8px 0;
 }
 
 .profile__occupation {

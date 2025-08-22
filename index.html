@@ -8,13 +8,15 @@
     <link rel="stylesheet" href="./fonts/Inter.ttc" />
   </head>
   <body class="page">
+    <!-- Header -->
     <header class="header">
       <h1 class="header__title">
         Around<span class="header__subtitle">The U.S.</span>
       </h1>
     </header>
 
-    <div class="profile">
+    <!-- Profile -->
+    <section class="profile">
       <img src="./images/Avatar.png" alt="Avatar" class="profile__avatar" />
       <div class="profile__info">
         <h1 class="profile__name">
@@ -30,98 +32,44 @@
       <button
         class="profile__add-button"
         type="button"
-        aria-label="Agregar"
+        aria-label="Agregar nuevo lugar"
+        data-open="add-card"
       ></button>
-    </div>
-
-    <section class="cards">
-      <article class="card">
-        <img
-          src="images/img_1.jpg"
-          alt="Valle de Yosemite"
-          class="card__image"
-        />
-        <div class="card__caption">
-          <h3 class="card__title block">Valle de Yosemite</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="images/img_2.png" alt="Lago Louise" class="card__image" />
-        <div class="card__caption">
-          <h3 class="card__title block">Lago Louise</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="images/img_3.png" alt="Montañas Calvas" class="card__image" />
-        <div class="card__caption">
-          <h3 class="card__title block">Montañas Calvas</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img
-          src="images/img_4.png"
-          alt="Parque Nacional de la Vanoise"
-          class="card__image"
-        />
-        <div class="card__caption">
-          <h3 class="card__title block">Vanoise National Park</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="images/img_5.png" alt="Latemar" class="card__image" />
-        <div class="card__caption">
-          <h3 class="card__title block">Latemar</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="images/img_6.png" alt="Lago di Braies" class="card__image" />
-        <div class="card__caption">
-          <h3 class="card__title block">Lago di Braies</h3>
-          <button
-            class="card__like-button"
-            type="button"
-            aria-label="Me gusta"
-          ></button>
-        </div>
-      </article>
     </section>
 
-    <section class="popup">
+    <!-- Cards -->
+    <section class="cards" aria-live="polite"></section>
+
+    <!--Templates -->
+    <template id="card-template">
+      <article class="card">
+        <img class="card__image" src="" alt="" />
+        <button
+          class="card__delete-button"
+          type="button"
+          aria-label="Eliminar tarjeta"
+        ></button>
+        <div class="card__caption">
+          <h3 class="card__title block"></h3>
+          <button
+            class="card__like-button"
+            type="button"
+            aria-label="Marcar como favorito"
+          ></button>
+        </div>
+      </article>
+    </template>
+
+    <!-- Popups -->
+
+    <!-- Popup: Editar perfil -->
+    <section class="popup popup_type_edit-profile" aria-hidden="true">
       <div class="popup__container">
         <button
           class="popup__close-button"
           type="button"
           aria-label="Cerrar"
+          data-close
         ></button>
         <h3 class="popup__title">Editar perfil</h3>
         <form class="popup__form" name="edit-profile" novalidate>
@@ -150,10 +98,62 @@
       </div>
     </section>
 
+    <!-- Popup: Nuevo lugar -->
+    <section class="popup popup_type_add-card" aria-hidden="true">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Cerrar"
+          data-close
+        ></button>
+        <h3 class="popup__title">Nuevo lugar</h3>
+        <form class="popup__form" name="add-card" novalidate>
+          <input
+            type="text"
+            name="title"
+            class="popup__input"
+            placeholder="Título"
+            required
+            minlength="1"
+            maxlength="30"
+          />
+          <input
+            type="url"
+            name="link"
+            class="popup__input"
+            placeholder="Enlace a la imagen"
+            required
+          />
+          <button class="popup__save-button" type="submit" disabled>
+            Crear
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Popup: Imagen ampliada -->
+    <section class="popup popup_type_image" aria-hidden="true">
+      <div class="popup__container popup__container_type_image">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Cerrar"
+          data-close
+        ></button>
+        <figure class="popup__figure">
+          <img class="popup__image" src="" alt="" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
       <p class="footer__text">&copy; 2024 Around The U.S.</p>
     </footer>
 
+    <!-- JS -->
     <script src="scripts/index.js"></script>
   </body>
 </html>
