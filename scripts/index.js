@@ -91,7 +91,7 @@ function handleOverlay(e) {
   }
 }
 
-/* Validación para habilitar botones */
+/* Validación para habilitar botones (usada por validate.js si está presente) */
 function setSubmitState(formEl, buttonEl) {
   if (!formEl || !buttonEl) return;
   const allValid = Array.from(formEl.elements).every((el) => {
@@ -99,6 +99,20 @@ function setSubmitState(formEl, buttonEl) {
     return el.validity.valid;
   });
   buttonEl.disabled = !allValid;
+}
+
+/* ===== Activar validaciones (archivo scripts/validate.js debe cargarse antes) ===== */
+if (window.Validation) {
+  // Editar perfil
+  window.Validation.enableEditProfileValidation(formEdit, saveEditBtn);
+
+  // Nuevo lugar (pasamos referencias al título y al link)
+  window.Validation.enableNewPlaceValidation(
+    formAdd,
+    saveAddBtn,
+    titleInput,
+    linkInput
+  );
 }
 
 /* Tarjetas */

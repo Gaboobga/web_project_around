@@ -199,3 +199,24 @@
   top: -32px;
   right: -32px;
 }
+
+/* ===== Validación de formularios ===== */
+.popup__input_invalid {
+  border-bottom: 2px solid #ff0000;
+  outline: none;
+}
+
+.popup__error {
+  display: block;
+  min-height: 18px;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #ff0000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.popup__error_visible {
+  opacity: 1;
+}
