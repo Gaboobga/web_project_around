@@ -91,7 +91,7 @@ function handleOverlay(e) {
   }
 }
 
-/* Validación para habilitar botones (usada por validate.js si está presente) */
+/* Validación para habilitar botones */
 function setSubmitState(formEl, buttonEl) {
   if (!formEl || !buttonEl) return;
   const allValid = Array.from(formEl.elements).every((el) => {
@@ -101,12 +101,12 @@ function setSubmitState(formEl, buttonEl) {
   buttonEl.disabled = !allValid;
 }
 
-/* ===== Activar validaciones (archivo scripts/validate.js debe cargarse antes) ===== */
+/*Activar validaciones (archivo scripts/validate.js debe cargarse antes)*/
 if (window.Validation) {
   // Editar perfil
   window.Validation.enableEditProfileValidation(formEdit, saveEditBtn);
 
-  // Nuevo lugar (pasamos referencias al título y al link)
+  // Nuevo lugar pasando referencias al título y al link
   window.Validation.enableNewPlaceValidation(
     formAdd,
     saveAddBtn,

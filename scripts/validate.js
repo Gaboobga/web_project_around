@@ -1,6 +1,6 @@
 /* scripts/validate.js */
 (function (global) {
-  /* ---------- Helpers de error ---------- */
+  /*Helpers de error*/
   function showInputError(input, errorEl) {
     errorEl.textContent = input.validationMessage;
     input.classList.add("popup__input_invalid");
@@ -29,7 +29,6 @@
     else hideInputError(input, errorEl);
   }
 
-  // Usa tu setSubmitState si existe; si no, hace un fallback seguro.
   function updateSubmitState(formEl, submitBtn) {
     if (!submitBtn) return;
     if (typeof window.setSubmitState === "function") {
@@ -72,9 +71,9 @@
     updateSubmitState(formEl, submitBtn);
   }
 
-  /* ---------- Wrappers por formulario ---------- */
+  /* Wrappers por formulario */
 
-  // Editar perfil: asume que los atributos (required, minlength/maxlength) ya están en el HTML.
+  // Editar perfil
   function enableEditProfileValidation(formEl, submitBtn) {
     enableFormValidation(formEl, submitBtn, "input");
   }
