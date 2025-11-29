@@ -1,3 +1,9 @@
+// scripts/index.js
+
+import { openPopup, closePopup } from "./utils.js";
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 /* Datos iniciales */
 const initialCards = [
   {
@@ -17,7 +23,7 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/latemar.jpg",
   },
   {
-    name: "Parque Nacional de la Vanoise",
+    name: "Parque Nacional de Vanoise",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/new-markets/WEB_sprint_5/ES/vanoise.jpg",
   },
   {
@@ -26,219 +32,124 @@ const initialCards = [
   },
 ];
 
-/* Selectores base */
+/* Selectores generales */
 const cardsContainer = document.querySelector(".cards");
-
-/* Perfil */
-const profileNameEl = document.querySelector(".profile__name");
-const profileAboutEl = document.querySelector(".profile__occupation");
-const editProfileBtn = document.querySelector(".profile__edit-button");
-const addCardBtn = document.querySelector(".profile__add-button");
+const cardTemplateSelector = "#card-template";
 
 /* Popups */
-const popupEdit =
-  document.querySelector(".popup_type_edit-profile") ||
-  document.querySelector(".popup"); // fallback
-const popupAdd = document.querySelector(".popup_type_add-card");
+const popupEditProfile = document.querySelector(".popup_type_edit-profile");
+const popupAddCard = document.querySelector(".popup_type_add-card");
 const popupImage = document.querySelector(".popup_type_image");
 
-/* Popup Editar perfil: elementos */
-const formEdit = popupEdit?.querySelector('form[name="edit-profile"]');
-const nameInput = formEdit?.elements?.name;
-const aboutInput = formEdit?.elements?.about;
-const saveEditBtn = formEdit?.querySelector(".popup__save-button");
+/* Elementos del perfil */
+const profileName = document.querySelector(".profile__name");
+const profileOccupation = document.querySelector(".profile__occupation");
+const editProfileButton = document.querySelector(".profile__edit-button");
+const addCardButton = document.querySelector(".profile__add-button");
 
-/* Popup Añadir tarjeta: elementos */
-const formAdd = popupAdd?.querySelector('form[name="add-card"]');
-const titleInput = formAdd?.elements?.title;
-const linkInput = formAdd?.elements?.link;
-const saveAddBtn = formAdd?.querySelector(".popup__save-button");
+/* Formularios */
+const formEditProfile = popupEditProfile.querySelector(".popup__form");
+const formAddCard = popupAddCard.querySelector(".popup__form");
 
-/* Popup Imagen: elementos */
-const popupImgEl = popupImage?.querySelector(".popup__image");
-const popupCaptionEl = popupImage?.querySelector(".popup__caption");
+/* Inputs del formulario de perfil */
+const nameInput = formEditProfile.elements.name;
+const aboutInput = formEditProfile.elements.about;
 
-/* Template tarjeta */
-const cardTemplate = document.querySelector("#card-template");
+/* Inputs del formulario de nueva tarjeta */
+const titleInput = formAddCard.elements.title;
+const linkInput = formAddCard.elements.link;
 
-/* Utilidades de popups */
-function openPopup(popupEl) {
-  if (!popupEl) return;
-  popupEl.classList.add("popup_opened");
-  document.addEventListener("keydown", handleEsc);
-  popupEl.addEventListener("mousedown", handleOverlay);
+/* Elementos del popup de imagen */
+const popupImageElement = popupImage.querySelector(".popup__image");
+const popupImageCaption = popupImage.querySelector(".popup__caption");
+
+/* Configuración de validación */
+const validationConfig = {
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__save-button",
+  inactiveButtonClass: "popup__save-button_disabled",
+  inputErrorClass: "popup__input_invalid",
+  errorClass: "popup__error_visible",
+};
+
+/* Instancias de validación */
+const editProfileValidator = new FormValidator(
+  validationConfig,
+  formEditProfile
+);
+editProfileValidator.setEventListeners();
+
+const addCardValidator = new FormValidator(validationConfig, formAddCard);
+addCardValidator.setEventListeners();
+
+/* Función de callback para el click en la imagen de la tarjeta */
+function handleCardClick(name, link) {
+  popupImageElement.src = link;
+  popupImageElement.alt = name;
+  popupImageCaption.textContent = name;
+  openPopup(popupImage);
 }
 
-function closePopup(popupEl) {
-  if (!popupEl) return;
-  popupEl.classList.remove("popup_opened");
-  popupEl.removeEventListener("mousedown", handleOverlay);
-  if (!document.querySelector(".popup_opened")) {
-    document.removeEventListener("keydown", handleEsc);
-  }
+/* Crear tarjeta usando la clase Card */
+function createCard(data) {
+  const card = new Card(data, cardTemplateSelector, handleCardClick);
+  return card.generateCard();
 }
 
-function handleEsc(e) {
-  if (e.key === "Escape") {
-    const opened = document.querySelectorAll(".popup_opened");
-    opened.forEach(closePopup);
-  }
-}
-
-function handleOverlay(e) {
-  if (e.target.classList.contains("popup")) {
-    closePopup(e.currentTarget);
-  }
-}
-
-/* Validación para habilitar botones */
-function setSubmitState(formEl, buttonEl) {
-  if (!formEl || !buttonEl) return;
-  const allValid = Array.from(formEl.elements).every((el) => {
-    if (!(el instanceof HTMLInputElement)) return true;
-    return el.validity.valid;
-  });
-  buttonEl.disabled = !allValid;
-}
-
-/*Activar validaciones (archivo scripts/validate.js debe cargarse antes)*/
-if (window.Validation) {
-  // Editar perfil
-  window.Validation.enableEditProfileValidation(formEdit, saveEditBtn);
-
-  // Nuevo lugar pasando referencias al título y al link
-  window.Validation.enableNewPlaceValidation(
-    formAdd,
-    saveAddBtn,
-    titleInput,
-    linkInput
-  );
-}
-
-/* Tarjetas */
-function createCard({ name, link }) {
-  let card;
-
-  if (cardTemplate) {
-    const node = cardTemplate.content.querySelector(".card").cloneNode(true);
-    card = node;
-  } else {
-    card = document.createElement("article");
-    card.className = "card";
-    card.innerHTML = `
-      <img class="card__image" src="" alt="" />
-      <button class="card__delete-button" type="button" aria-label="Eliminar tarjeta"></button>
-      <div class="card__caption">
-        <h3 class="card__title block"></h3>
-        <button class="card__like-button" type="button" aria-label="Marcar como favorito"></button>
-      </div>
-    `;
-  }
-
-  const img = card.querySelector(".card__image");
-  const title = card.querySelector(".card__title");
-  const likeBtn = card.querySelector(".card__like-button");
-  const delBtn = card.querySelector(".card__delete-button");
-
-  img.src = link;
-  img.alt = name;
-  title.textContent = name;
-
-  // Like (toggle)
-  likeBtn.addEventListener("click", () => {
-    likeBtn.classList.toggle("card__like-button_active");
-  });
-
-  // Eliminar tarjeta
-  delBtn.addEventListener("click", () => {
-    card.remove();
-  });
-
-  // Abrir imagen
-  img.addEventListener("click", () => {
-    if (!popupImage) return;
-    if (popupImgEl) popupImgEl.src = link;
-    if (popupImgEl) popupImgEl.alt = name;
-    if (popupCaptionEl) popupCaptionEl.textContent = name;
-    openPopup(popupImage);
-  });
-
-  return card;
-}
-
+/* Renderizar tarjetas iniciales */
 function renderInitialCards() {
-  if (!cardsContainer) return;
   initialCards.forEach((item) => {
-    cardsContainer.append(createCard(item));
+    const cardElement = createCard(item);
+    cardsContainer.append(cardElement);
   });
 }
 
-/* Eventos: Editar perfil */
-if (editProfileBtn && popupEdit && formEdit) {
-  editProfileBtn.addEventListener("click", () => {
-    const currentNameText =
-      profileNameEl?.childNodes?.[0]?.nodeValue?.trim() ||
-      profileNameEl?.textContent?.trim() ||
-      "";
-    if (nameInput) nameInput.value = currentNameText;
-    if (aboutInput)
-      aboutInput.value = profileAboutEl?.textContent?.trim() || "";
-
-    setSubmitState(formEdit, saveEditBtn);
-    openPopup(popupEdit);
-  });
-
-  formEdit.addEventListener("input", () =>
-    setSubmitState(formEdit, saveEditBtn)
-  );
-
-  formEdit.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (profileNameEl && nameInput) {
-      // Si el nombre tiene un botón dentro, preservamos el botón
-      const btn = profileNameEl.querySelector(".profile__edit-button");
-      profileNameEl.textContent = `${nameInput.value}`;
-      if (btn) profileNameEl.appendChild(btn);
-    }
-    if (profileAboutEl && aboutInput) {
-      profileAboutEl.textContent = aboutInput.value;
-    }
-    closePopup(popupEdit);
-  });
-}
-
-/* Cerrar popups con botones */
-document.addEventListener("click", (e) => {
-  const closeBtn = e.target.closest(".popup__close-button");
-  if (closeBtn) {
-    const popup = closeBtn.closest(".popup");
-    if (popup) closePopup(popup);
-  }
+/* Manejo del perfil */
+editProfileButton.addEventListener("click", () => {
+  nameInput.value = profileName.firstChild.textContent.trim();
+  aboutInput.value = profileOccupation.textContent.trim();
+  editProfileValidator.resetValidation();
+  openPopup(popupEditProfile);
 });
 
-/* Eventos: Añadir tarjeta */
-if (addCardBtn && popupAdd && formAdd) {
-  addCardBtn.addEventListener("click", () => {
-    formAdd.reset();
-    setSubmitState(formAdd, saveAddBtn);
-    openPopup(popupAdd);
+formEditProfile.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  profileName.firstChild.textContent = nameInput.value.trim();
+  profileOccupation.textContent = aboutInput.value.trim();
+
+  closePopup(popupEditProfile);
+});
+
+/* Manejo de nueva tarjeta */
+addCardButton.addEventListener("click", () => {
+  formAddCard.reset();
+  addCardValidator.resetValidation();
+  openPopup(popupAddCard);
+});
+
+formAddCard.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+
+  const name = titleInput.value.trim();
+  const link = linkInput.value.trim();
+
+  const newCardElement = createCard({ name, link });
+  cardsContainer.prepend(newCardElement);
+
+  closePopup(popupAddCard);
+  formAddCard.reset();
+  addCardValidator.resetValidation();
+});
+
+/* Botones de cerrar */
+const closeButtons = document.querySelectorAll(".popup__close-button");
+closeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const popup = button.closest(".popup");
+    closePopup(popup);
   });
-
-  formAdd.addEventListener("input", () => setSubmitState(formAdd, saveAddBtn));
-
-  formAdd.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const title = titleInput?.value?.trim();
-    const link = linkInput?.value?.trim();
-    if (!title || !link) return;
-
-    const card = createCard({ name: title, link });
-    cardsContainer.prepend(card);
-    closePopup(popupAdd);
-    formAdd.reset();
-    setSubmitState(formAdd, saveAddBtn);
-  });
-}
+});
 
 /* Render inicial */
 renderInitialCards();
