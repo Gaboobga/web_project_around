@@ -1,15 +1,16 @@
-// components/UserInfo.js
+// src/components/UserInfo.js
 export class UserInfo {
-  constructor({ nameSelector, jobSelector }) {
+  constructor({ nameSelector, jobSelector, avatarSelector }) {
     this._nameElement = document.querySelector(nameSelector);
     this._jobElement = document.querySelector(jobSelector);
+    this._avatarElement = document.querySelector(avatarSelector);
   }
 
   _getTextNode(element) {
     const nodes = Array.from(element.childNodes);
     const textNode = nodes.find(
       (node) =>
-        node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0
+        node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0,
     );
 
     if (!textNode) {
@@ -34,7 +35,12 @@ export class UserInfo {
     const nameTextNode = this._getTextNode(this._nameElement);
 
     nameTextNode.textContent = `${name}\n          `;
-
     this._jobElement.textContent = job;
+  }
+
+  setUserAvatar(avatarLink) {
+    if (this._avatarElement && avatarLink) {
+      this._avatarElement.src = avatarLink;
+    }
   }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -17,7 +17,15 @@
 
     <!-- Profile -->
     <section class="profile">
-      <img src="./images/Avatar.png" alt="Avatar" class="profile__avatar" />
+      <div class="profile__avatar-container">
+        <img src="./images/Avatar.png" alt="Avatar" class="profile__avatar" />
+        <button
+          class="profile__avatar-edit-button"
+          type="button"
+          aria-label="Editar foto de perfil"
+        ></button>
+      </div>
+
       <div class="profile__info">
         <h1 class="profile__name">
           Jacques Cousteau
@@ -136,6 +144,50 @@
           <button class="popup__save-button" type="submit" disabled>
             Crear
           </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Popup: Actualizar foto de perfil -->
+    <section class="popup popup_type_edit-avatar" aria-hidden="true">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Cerrar"
+          data-close
+        ></button>
+        <h3 class="popup__title">Cambiar foto de perfil</h3>
+        <form class="popup__form" name="edit-avatar" novalidate>
+          <input
+            type="url"
+            name="avatar"
+            class="popup__input"
+            placeholder="Enlace a la nueva foto"
+            required
+          />
+          <span class="popup__error avatar-error"></span>
+
+          <button class="popup__save-button" type="submit" disabled>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Popup: Confirmar eliminación -->
+    <section class="popup popup_type_confirm-delete" aria-hidden="true">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Cerrar"
+          data-close
+        ></button>
+        <h3 class="popup__title">¿Estás seguro/a?</h3>
+
+        <form class="popup__form" name="confirm-delete">
+          <button class="popup__save-button" type="submit">Sí</button>
         </form>
       </div>
     </section>
